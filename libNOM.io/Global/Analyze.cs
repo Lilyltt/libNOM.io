@@ -1,4 +1,6 @@
-﻿using libNOM.io.Settings;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using libNOM.io.Settings;
 
 namespace libNOM.io.Global;
 
@@ -130,7 +132,7 @@ public static class Analyze
 
     #region Helper
 
-    private static Platform CreatePlatform<T>(FileInfo data, PlatformSettings? platformSettings, out int metaIndex) where T : Platform
+    private static Platform CreatePlatform<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(FileInfo data, PlatformSettings? platformSettings, out int metaIndex) where T : Platform
     {
         var typeofT = typeof(T);
 

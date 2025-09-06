@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 
 using libNOM.io.Settings;
 
@@ -220,7 +221,7 @@ public class PlatformCollection : IEnumerable<IPlatform>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    private List<Task> TryAddDirectory<T>() where T : IPlatform
+    private List<Task> TryAddDirectory<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>() where T : IPlatform
     {
         var tasks = new List<Task>();
 
