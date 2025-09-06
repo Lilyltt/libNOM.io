@@ -1,87 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<!-- Application -->
-	<PropertyGroup>
-		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-		<IsTestProject>true</IsTestProject>
-	</PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublishAot>true</PublishAot>
+    </PropertyGroup>
 
-	<!-- Global Usings -->
-	<PropertyGroup>
-		<ImplicitUsings>enable</ImplicitUsings>
-	</PropertyGroup>
-	<ItemGroup>
-		<Using Include="libNOM.io.Enums" />
-		<Using Include="libNOM.io.Settings" />
-		<Using Include="libNOM.test.Helper" />
-	</ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\libNOM.io\libNOM.io.csproj" />
+      <ProjectReference Include="..\libNOM.Map.Aot\libNOM.Map.Aot.csproj" />
+    </ItemGroup>
 
-	<!-- Build -->
-	<PropertyGroup Label="General">
-		<Nullable>enable</Nullable>
-		<IsPackable>false</IsPackable>
-	</PropertyGroup>
-	<PropertyGroup Label="Publish">
-		<IsPackable>false</IsPackable>
-	</PropertyGroup>
-	<PropertyGroup Label="Advanced">
-		<LangVersion>13.0</LangVersion>
-		<Deterministic>True</Deterministic>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
-		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<IsPublishable>False</IsPublishable>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0|AnyCPU'">
-		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<IsPublishable>False</IsPublishable>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
-		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<IsPublishable>False</IsPublishable>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0|AnyCPU'">
-		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<IsPublishable>False</IsPublishable>
-	</PropertyGroup>
-
-	<!-- Code Analysis -->
-	<PropertyGroup>
-		<EnableNETAnalyzers>True</EnableNETAnalyzers>
-	</PropertyGroup>
-
-	<!-- Dependencies -->
-	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-		<PackageReference Include="MSTest.TestAdapter" Version="3.9.3" />
-		<PackageReference Include="MSTest.TestFramework" Version="3.9.3" />
-		<PackageReference Include="coverlet.collector" Version="6.0.4">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="SharpCompress" Version="0.40.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\libNOM.cli\libNOM.cli.csproj" />
-		<ProjectReference Include="..\libNOM.io\libNOM.io.csproj" />
-	</ItemGroup>
-
-	<!-- Resources -->
-	<ItemGroup>
-		<Compile Update="Properties\Resources.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Resources.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Update="Properties\Resources.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
+    <ItemGroup>
+      <None Remove="mapping.json" />
+      <EmbeddedResource Include="mapping.json" />
+    </ItemGroup>
 
 </Project>

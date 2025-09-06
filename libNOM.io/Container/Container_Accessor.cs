@@ -1,4 +1,4 @@
-﻿using libNOM.map;
+﻿using libNOM.Map.Aot;
 
 using Newtonsoft.Json.Linq;
 
@@ -114,11 +114,11 @@ public partial class Container : IContainer
         if (_jsonObject is not null && Platform is not null) // happens when the container is unloaded
             if (Platform.Settings.UseMapping)
             {
-                UnknownKeys = Mapping.Deobfuscate(_jsonObject, IsAccount);
+                _jsonObject = Mapping.Deobfuscate(_jsonObject.ToJsonNode(), IsAccount).ToJToken() as JObject;
             }
             else
             {
-                Mapping.Obfuscate(_jsonObject, IsAccount);
+                _jsonObject = Mapping.Obfuscate(_jsonObject.ToJsonNode(), IsAccount).ToJToken() as JObject;
             }
     }
 

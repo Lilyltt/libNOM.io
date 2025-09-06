@@ -1,5 +1,4 @@
-﻿using libNOM.map;
-
+﻿using libNOM.Map.Aot;
 using Newtonsoft.Json.Linq;
 
 namespace libNOM.io;
@@ -116,7 +115,7 @@ public partial class PlatformPlaystation : Platform
 
         // Deobfuscate anyway if _useSaveWizard to realign mapping by SaveWizard.
         if (_usesSaveWizard)
-            container.UnknownKeys = Mapping.Deobfuscate(jsonObject, container.IsAccount);
+            jsonObject = Mapping.Deobfuscate(jsonObject.ToJsonNode(), container.IsAccount).ToJToken() as JObject;
 
         return jsonObject;
     }

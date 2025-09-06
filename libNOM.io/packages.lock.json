@@ -30,16 +30,6 @@
           "Microsoft.Extensions.Caching.Memory": "2.1.0"
         }
       },
-      "libNOM.map": {
-        "type": "Direct",
-        "requested": "[0.13.7, )",
-        "resolved": "0.13.7",
-        "contentHash": "VQ6Dk6xKjFx+6auvUz/rA9gPVjo1FsL6IzFH8UWlNsVW/HGyJ15Tn6rrEqu9cSSAqZIgiDLv5dFmKFKv7z4DtA==",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.3",
-          "Octokit": "14.0.0"
-        }
-      },
       "Microsoft.DotNet.ILCompiler": {
         "type": "Direct",
         "requested": "[9.0.6, )",
@@ -133,11 +123,6 @@
         "resolved": "1.1.0.2",
         "contentHash": "eNtS/dCBFOCTmj0xx//emcWB8UrQrMbmqpvpMpZFixeXLQcUOcadMH0jqbdjsCVSNSpxa7HZLRCBYDe127gVTQ=="
       },
-      "Octokit": {
-        "type": "Transitive",
-        "resolved": "14.0.0",
-        "contentHash": "jGOuTH1l+TCpJH+fwYOp7USzHDuGfN1jKbLz3J2COwyn+wL08eynvpnM6rY2qkzIEXum3PN2p2QkP3BW/p9Qcw=="
-      },
       "System.Memory": {
         "type": "Transitive",
         "resolved": "4.5.0",
@@ -147,6 +132,25 @@
         "type": "Transitive",
         "resolved": "4.5.0",
         "contentHash": "YrzNWduCDHhUaSRBxHxL11UkM2fD6y8hITHis4/LbQZ6vj3vdRjoH3IoPWWC9uDXK2wHIqn+b5gv1Np/VKyM1g=="
+      },
+      "libnom.map.aot": {
+        "type": "Project"
+      }
+    },
+    "net9.0/win-x64": {
+      "Microsoft.DotNet.ILCompiler": {
+        "type": "Direct",
+        "requested": "[9.0.6, )",
+        "resolved": "9.0.6",
+        "contentHash": "O7Row/kOgEA3PXpeCVKpDJ9ooAoJDoKoxpZC86voOAwV2NA1jTbQ0Nn0VCuoTT/IvU0T7YNlPldAS0mOrppXmw==",
+        "dependencies": {
+          "runtime.win-x64.Microsoft.DotNet.ILCompiler": "9.0.6"
+        }
+      },
+      "runtime.win-x64.Microsoft.DotNet.ILCompiler": {
+        "type": "Transitive",
+        "resolved": "9.0.6",
+        "contentHash": "CnNmfPtanygd9DnZ/Qe0dLjvPtP4ujx1uDRsS8UEeFS2cg72fYVNo7tje3/F26NjfnwDRE6xGX0c/eczhSps4g=="
       }
     }
   }

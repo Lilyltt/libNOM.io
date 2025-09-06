@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Diagnostics;
+﻿using System.Text.Json.Nodes;
+using CommunityToolkit.Diagnostics;
 
-using libNOM.map;
-
+using libNOM.Map.Aot;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -43,14 +43,62 @@ public static class NewtonsoftExtensions
         var jsonToken = Common.DeepCopy(self);
 
         if (obfuscate)
-            Mapping.Obfuscate(jsonToken, useAccount);
+            jsonToken = Mapping.Obfuscate(jsonToken.ToJsonNode(), useAccount).ToJToken();
         else
-            Mapping.Deobfuscate(jsonToken, useAccount);
+            jsonToken = Mapping.Deobfuscate(jsonToken.ToJsonNode(), useAccount).ToJToken();
 
         var settings = new JsonSerializerSettings { Formatting = indent ? Formatting.Indented : Formatting.None };
         var jsonString = JsonConvert.SerializeObject(jsonToken, settings);
 
         return jsonString.Replace("/", "\\/");
+    }
+
+    #endregion
+
+    #region JTokenToJsonNode
+
+    /// <summary>
+    /// 将JToken转换为JsonNode
+    /// </summary>
+    /// <param name="self"></param>
+    /// <returns></returns>
+    public static JsonNode? ToJsonNode(this JToken self)
+    {
+        return self.Type switch
+        {
+            JTokenType.Object => JsonNode.Parse(self.ToString()),
+            JTokenType.Array => JsonNode.Parse(self.ToString()),
+            JTokenType.Integer => JsonValue.Create(self.Value<long>()),
+            JTokenType.Float => JsonValue.Create(self.Value<double>()),
+            JTokenType.String => JsonValue.Create(self.Value<string>()),
+            JTokenType.Boolean => JsonValue.Create(self.Value<bool>()),
+            JTokenType.Date => JsonValue.Create(self.Value<DateTime>()),
+            JTokenType.Null => null,
+            _ => JsonNode.Parse(self.ToString())
+        };
+    }
+
+    /// <summary>
+    /// 将JsonNode转换为JToken
+    /// </summary>
+    /// <param name="self"></param>
+    /// <returns></returns>
+    public static JToken? ToJToken(this JsonNode? self)
+    {
+        if (self == null)
+            return JValue.CreateNull();
+        
+        return self switch
+        {
+            JsonObject => JObject.Parse(self.ToJsonString()),
+            JsonArray => JArray.Parse(self.ToJsonString()),
+            JsonValue jsonValue when jsonValue.TryGetValue<string>(out var stringValue) => new JValue(stringValue),
+            JsonValue jsonValue when jsonValue.TryGetValue<long>(out var longValue) => new JValue(longValue),
+            JsonValue jsonValue when jsonValue.TryGetValue<double>(out var doubleValue) => new JValue(doubleValue),
+            JsonValue jsonValue when jsonValue.TryGetValue<bool>(out var boolValue) => new JValue(boolValue),
+            JsonValue jsonValue when jsonValue.TryGetValue<DateTime>(out var dateValue) => new JValue(dateValue),
+            _ => JToken.Parse(self.ToJsonString())
+        };
     }
 
     #endregion
