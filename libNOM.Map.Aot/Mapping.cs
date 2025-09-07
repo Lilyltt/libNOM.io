@@ -46,14 +46,10 @@ namespace libNOM.Map.Aot;
 
         public static JsonNode Obfuscate(JsonNode? node, bool useAccount = false)
         {
-            if (useAccount)
-            {
-                return ReplacePlainKeys(node, AccountKey);
-            }
-            else
-            {
-                return ReplacePlainKeys(node, CommonKey);
-            }
+            var keyMap = useAccount ? AccountKey : CommonKey;
+            // 创建反向映射用于混淆
+            var reverseMap = keyMap.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+            return ReplacePlainKeys(node, reverseMap);
         }
 
         public static JsonNode Deobfuscate(JsonNode? token, bool useAccount = false)
